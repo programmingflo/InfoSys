@@ -9,21 +9,19 @@ import java.util.HashSet;
 import java.util.Set;
 
 class Lagerverwaltung {
-	//private static Set<String> berechtigteMitarbeiter = new HashSet<>(); 
 	private static Set<String> berechtigteMitarbeiter;
-	//private static Map<String, Lagerposten> mapLagerposten = new Map<String, Lagerposten>();
 	private static Map<String, Lagerposten> mapLagerposten;
-	
-	
-	
+	private static Log log;
 	
 	public Lagerverwaltung() {
 		berechtigteMitarbeiter = new HashSet<String>();
 		mapLagerposten = new HashMap<String, Lagerposten>();
+		log = new Log("C:\\Users\\Florian Mansfeld\\Desktop\\log.txt","|newLog|","|tss|");
 	}
 	
 	public void berechtigungErteilen(Mitarbeiter ma) {
-		berechtigteMitarbeiter.add(ma.getName());
+		//berechtigteMitarbeiter.add(ma.getName());
+		log.write("Berechtigung erteilt für: " + ma);
 	}
 	
 	/**
