@@ -1,6 +1,5 @@
 package gdP_Projekt_InfoSys;
 
-
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ class Lagerverwaltung {
 	public Lagerverwaltung() {
 		berechtigteMitarbeiter = new HashSet<String>();
 		mapLagerposten = new HashMap<String, Lagerposten>();
-		log = new Log("C:\\Users\\Florian Mansfeld\\Desktop\\log.txt","|newLog|","|tss|");
+		log = new Log("log.txt","|newLog|","|tss|");
 	}
 	
 	public void berechtigungErteilen(Mitarbeiter ma) {
@@ -87,9 +86,4 @@ class Lagerverwaltung {
 		}
 		return output;
 	}
-	
-	
-	
-	
-	
 }
