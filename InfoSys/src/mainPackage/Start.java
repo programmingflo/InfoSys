@@ -1,11 +1,11 @@
-package mainPackage;
+package gdP_Projekt_InfoSys;
 
 class Start {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		//test
-		//lasllblb
+		Lagerverwaltung lw1 = new Lagerverwaltung();
+		lw1.
+
 	}
 
 }
