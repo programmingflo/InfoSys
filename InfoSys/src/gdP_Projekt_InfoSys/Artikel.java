@@ -11,16 +11,19 @@ class Artikel {
 		this.beschreibung = beschreibung;
 	}
 	
+	public String getId() {
+		return this.id;
+	}
+	
 	public void setArtikelBeschreibung(String beschreibung) {
 		this.beschreibung = beschreibung;
 	}
 	
 	public String getArtikelBeschreibung() {
-		return beschreibung;		// this. ja nicht notwendig
+		return this.beschreibung;
 	}
 	
-	
-	// setArtikelName eeventuell Quark weil wir den Namen natuerlich auch als final legen koennten,
+	// setArtikelName eventuell Quark weil wir den Namen natuerlich auch als final legen koennten,
 	// aaber was solls.
 	public void setArtikelName(String name) {
 		this.name = name;
