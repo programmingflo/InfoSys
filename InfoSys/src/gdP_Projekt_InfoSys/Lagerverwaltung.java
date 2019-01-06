@@ -2,7 +2,6 @@ package gdP_Projekt_InfoSys;
 
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +22,7 @@ class Lagerverwaltung {
 	 * @param ma hinzuzufuegender Mitarbeiter
 	 */
 	public void berechtigungErteilen(Mitarbeiter ma) {
-		berechtigteMitarbeiter.add(ma.getName());
+		berechtigteMitarbeiter.add(ma.getID());
 		log.write("Berechtigung erteilt für: " + ma.getName() + ", ID: " + ma.getID() + ".");
 	}
 	
@@ -33,8 +32,8 @@ class Lagerverwaltung {
 	 */
 	public void berechtigungZurueckziehen(Mitarbeiter ma) {
 		// Nur Berechtigung entziehen falls Mitarbeiter auch wirklich Berechtigung hat
-		if(berechtigteMitarbeiter.contains(ma.getName())) {
-			berechtigteMitarbeiter.remove(ma);
+		if(berechtigteMitarbeiter.contains(ma.getID())) {
+			berechtigteMitarbeiter.remove(ma.getID());
 			log.write("Berechtigung zurückgezogen für: " + ma.getName() + ", ID: " + ma.getID() + ".");
 		}
 	}
@@ -46,7 +45,7 @@ class Lagerverwaltung {
 			//for(Map.Entry<String, Lagerposten> lp: mapLagerposten.entrySet()) {
 			for(Lagerposten lp: mapLagerposten.values())
 				log.write(lp.bestandLagerposten());
-			}
+		}
 	}
 
 	
@@ -59,27 +58,19 @@ class Lagerverwaltung {
 	 */
 	public void wareneingangBuchen(Mitarbeiter ma, Artikel a, int anzahl, double preis) {
 		// Berechtigung pruefen
-		if(berechtigteMitarbeiter.contains(ma)) {
-			// Pruefen ob Artikel bereits Lagerposten besitzt
-			boolean lpExists = false;
-			for(Lagerposten lp: mapLagerposten.values()) {
-				if(lp.getArtikel().equals(a)) {
-					lpExists = true;
-					break;
-				}
+		if(berechtigteMitarbeiter.contains(ma.getID())) {
+			// Falls fuer Artikel bereits ein Lagerposten besteht, wird die Anzahl und der Preis aktualisiert
+			// Falls fuer Artikel noch kein Lagerposten besteht, wird einer angelegt
+			if(mapLagerposten.get(a.getID()) != null) {
+				Lagerposten lagerposten = mapLagerposten.get(a.getID());
+				lagerposten.addToLagerbestand(anzahl);
+				lagerposten.setPreis(preis);
+				log.write("Mitarbeiter: " + ma.getName() + ", ID: " + ma.getID() + " hat " + anzahl + " Artikel von: " + a.getArtikelName() + " mit dem Preis: " + preis + "€ zum Lager hinzugefügt.");
+			} else {
+				Lagerposten lagerposten = new Lagerposten(a, anzahl, preis);
+				mapLagerposten.put(a.getID(), lagerposten);
+				log.write("Mitarbeiter: " + ma.getName() + ", ID: " + ma.getID() + " hat " + anzahl + " Artikel von: " + a.getArtikelName() + " mit dem Preis: " + preis + "€ als neuen Lagerposten zum Lager hinzugefügt.");
 			}
-			// Falls Artikel noch keinen Lagerposten besitzt, Lagerposten erstellen
-			if (!lpExists) {
-				log.write("Jetzt müsste ein neuer Lagerposten erstellt werden.");
-				/**
-				 * Problem: Was ist der String als Key für die Map überhaupt? Isses der Name?
-				 */
-				//mapLagerposten.put(key, value)
-			}
-			
-			Lagerposten lagerposten = mapLagerposten.get(a.getId());
-			lagerposten.addToLagerbestand(anzahl);
-			lagerposten.setPreis(preis);
 		}
 	}
 	
@@ -92,7 +83,7 @@ class Lagerverwaltung {
 	public Bestellbestaetigung bestellungAusfuehren(Mitarbeiter ma, List<Bestellposten> bestellungen) {
 		Bestellbestaetigung output;
 		double gesamtpreis = 0;
-		if(berechtigteMitarbeiter.contains(ma)) {
+		if(berechtigteMitarbeiter.contains(ma.getID())) {
 			//Überprüfung, ob alle vorhanden
 			boolean everythingInStock = true;
 			for(Bestellposten bp : bestellungen) {
