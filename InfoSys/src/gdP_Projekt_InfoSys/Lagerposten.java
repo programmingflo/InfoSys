@@ -15,6 +15,13 @@ class Lagerposten {
 		return lagerbestand;
 	}
 	
+	public Artikel getArtikel() {
+		return artikel;
+	}
+	
+	public String getArtikelName() {
+		return artikel.getArtikelName();
+	}
 	// Pruefung ob Lagerbestand - gewuenschte Differenz >= 0 ist wird nicht hier gemacht
 	public void addToLagerbestand(int differenz) {
 		lagerbestand += differenz;
@@ -26,6 +33,13 @@ class Lagerposten {
 	
 	public double getPreis() {
 		return preis;
+	}
+	/**
+	 * Rueckgabe aktueller Stand des Lagerpostens
+	 * Name + Bestand + Preis
+	 */
+	public String bestandLagerposten() {
+		return ("Artikel: " + artikel.getArtikelName() + ", momentaner Bestand: " + lagerbestand + ", Preis: " + preis + "€.");
 	}
 	
 }

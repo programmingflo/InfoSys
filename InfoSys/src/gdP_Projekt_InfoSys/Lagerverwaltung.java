@@ -15,12 +15,16 @@ class Lagerverwaltung {
 	public Lagerverwaltung() {
 		berechtigteMitarbeiter = new HashSet<String>();
 		mapLagerposten = new HashMap<String, Lagerposten>();
-		log = new Log("log.txt","|newLog|","|tss|");
+		//log = new Log("C:\\Users\\Apfelkuchenbemme\\Desktop\\Verbuchung Lagerverwaltungsgelumpe20181218_124907.txt","|newLog|","|tss|"); //<= So muss der Pfad aussehen damits aufm Desktop landet
+		log = new Log("log.txt","|newLog|","|tss|");	//<= Hier landet der Spass in dem Ordner von Eclipse selber
 	}
-	
+	/**
+	 * Mitarbeiter zu dem HashSet "berechtigter Mitarbeiter" hinzufuegen
+	 * @param ma hinzuzufuegender Mitarbeiter
+	 */
 	public void berechtigungErteilen(Mitarbeiter ma) {
-		//berechtigteMitarbeiter.add(ma.getName());
-		log.write("Berechtigung erteilt für: " + ma);
+		berechtigteMitarbeiter.add(ma.getName());
+		log.write("Berechtigung erteilt für: " + ma.getName() + ", ID: " + ma.getID() + ".");
 	}
 	
 	/**
@@ -28,12 +32,23 @@ class Lagerverwaltung {
 	 * @param ma zu entfernender Mitarbeiter
 	 */
 	public void berechtigungZurueckziehen(Mitarbeiter ma) {
-		berechtigteMitarbeiter.remove(ma);
+		// Nur Berechtigung entziehen falls Mitarbeiter auch wirklich Berechtigung hat
+		if(berechtigteMitarbeiter.contains(ma.getName())) {
+			berechtigteMitarbeiter.remove(ma);
+			log.write("Berechtigung zurückgezogen für: " + ma.getName() + ", ID: " + ma.getID() + ".");
+		}
 	}
 	
 	public void lagerbestandAusgeben() {
-		// gesamten Lagerbestand ausgeben
+		if (mapLagerposten.isEmpty()) {
+			log.write("Es wurden noch keine Lagerposten erstellt.");
+		} else  {
+			//for(Map.Entry<String, Lagerposten> lp: mapLagerposten.entrySet()) {
+			for(Lagerposten lp: mapLagerposten.values())
+				log.write(lp.bestandLagerposten());
+			}
 	}
+
 	
 	/**
 	 * Wareneingang verbuchen mit Mitarbeiter, Artikel, Anzahl, Preis
@@ -43,7 +58,25 @@ class Lagerverwaltung {
 	 * @param preis Preis
 	 */
 	public void wareneingangBuchen(Mitarbeiter ma, Artikel a, int anzahl, double preis) {
+		// Berechtigung pruefen
 		if(berechtigteMitarbeiter.contains(ma)) {
+			// Pruefen ob Artikel bereits Lagerposten besitzt
+			boolean lpExists = false;
+			for(Lagerposten lp: mapLagerposten.values()) {
+				if(lp.getArtikel().equals(a)) {
+					lpExists = true;
+					break;
+				}
+			}
+			// Falls Artikel noch keinen Lagerposten besitzt, Lagerposten erstellen
+			if (!lpExists) {
+				log.write("Jetzt müsste ein neuer Lagerposten erstellt werden.");
+				/**
+				 * Problem: Was ist der String als Key für die Map überhaupt? Isses der Name?
+				 */
+				//mapLagerposten.put(key, value)
+			}
+			
 			Lagerposten lagerposten = mapLagerposten.get(a.getId());
 			lagerposten.addToLagerbestand(anzahl);
 			lagerposten.setPreis(preis);
