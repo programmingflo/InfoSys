@@ -3,7 +3,7 @@ package gdP_Projekt_InfoSys;
 class Lagerposten {
 	private int lagerbestand;
 	private double preis;
-	private final Artikel artikel;	// Artikel auf den sich der Lagerposten bezieht sollte nicht mehr aenderbar sein nachdem der Lagerposten erstellt wurde
+	private final Artikel artikel;	//Artikel auf den sich der Lagerposten bezieht sollte nicht mehr aenderbar sein nachdem der Lagerposten erstellt wurde
 	
 	public Lagerposten(Artikel artikel, int lagerbestand, double preis) {
 		this.artikel = artikel;
@@ -22,7 +22,8 @@ class Lagerposten {
 	public String getArtikelName() {
 		return artikel.getArtikelName();
 	}
-	// Pruefung ob Lagerbestand - gewuenschte Differenz >= 0 ist wird nicht hier gemacht
+
+	// Pruefung ob Lagerbestand - gewuenschte Differenz >= 0 wird in der Methode "bestellungAusfuehren" gemacht
 	public void addToLagerbestand(int differenz) {
 		lagerbestand += differenz;
 	}

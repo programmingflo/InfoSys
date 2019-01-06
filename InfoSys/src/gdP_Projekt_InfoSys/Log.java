@@ -26,13 +26,13 @@ class Log {
 		List<String> logList = new ArrayList<String>();
 		
 		try {
-			//read old
+			// read old
 			if(logFile.exists()) {
 				logString = new String(Files.readAllBytes(logFile.toPath()));
 				System.out.println(logString);
 			}
 			
-			logString += (logSeparator + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + timeStatementSeparator + logStatement); //very rare separator
+			logString += (logSeparator + new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime()) + timeStatementSeparator + logStatement); // very rare separator
 			
 			//write new
 			printWriter = new PrintWriter(logFile);

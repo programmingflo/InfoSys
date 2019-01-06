@@ -1,8 +1,8 @@
 package gdP_Projekt_InfoSys;
 
 class Artikel {
-	private final String id;	// ID nach Erstellung des Artikels nicht mehr aenderbar
-	private String name;
+	private final String id;	// ID sollte nach Erstellung des Artikels nicht mehr aenderbar sein => final
+	private String name;	// Name ist u.U. nochmal zu aendern => nicht final
 	private String beschreibung;
 	
 	public Artikel(String id, String name, String beschreibung) {
@@ -23,8 +23,6 @@ class Artikel {
 		return this.beschreibung;
 	}
 	
-	// setArtikelName eventuell Quark weil wir den Namen natuerlich auch als final legen koennten,
-	// aaber was solls.
 	public void setArtikelName(String name) {
 		this.name = name;
 	}

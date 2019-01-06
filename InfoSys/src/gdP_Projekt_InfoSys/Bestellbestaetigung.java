@@ -9,4 +9,12 @@ class Bestellbestaetigung {
 		this.gesamtpreis = gesamtpreis;
 	}
 	
+	public boolean getAusgefuehrt() {
+		return ausgefuehrt;
+	}
+	
+	public double getGesamtpreis() {
+		return gesamtpreis;
+	}
+	
 }
